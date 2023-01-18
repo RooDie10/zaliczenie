@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  http:
+    image: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d:cached
+      - ./../src:/var/www/localhost
+    links:
+      - php
+
+  php:
+    build: php
+    working_dir: /var/www/localhost
+    volumes:
+      - ./php/php.ini:/usr/local/etc/php/conf.d/php-override.ini
+      - ./../src:/var/www/localhost
